@@ -2,7 +2,7 @@ import axios from "axios";
 import { z } from "zod";
 
 const client = axios.create({
-  baseURL: "http://192.168.1.111:3000/public",
+  baseURL: process.env.EXPO_PUBLIC_BASE_URL + "/public",
 });
 
 export const metaDataValidation = z.object({

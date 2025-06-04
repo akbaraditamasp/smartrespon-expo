@@ -6,7 +6,7 @@ import {
   ThemeProvider,
 } from "@react-navigation/native";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { SplashScreen, Stack, useRouter } from "expo-router";
+import { SplashScreen, Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import "react-native-reanimated";
 
@@ -25,7 +25,6 @@ export default function RootLayout() {
   const colorScheme = useColorScheme();
   const token = useUserStore((state) => state.token);
   const tokenize = useUserStore((state) => state.tokenize);
-  const router = useRouter();
   const [mount, setMount] = useState(false);
 
   useEffect(() => {
@@ -37,12 +36,17 @@ export default function RootLayout() {
   }, [mount]);
 
   useEffect(() => {
-    setMount(true);
+    const timeout = setTimeout(() => {
+      setMount(true);
+    }, 1000);
 
     return () => {
       setMount(false);
+      clearTimeout(timeout);
     };
   }, [token]);
+
+  if (!mount) return null;
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -51,7 +55,7 @@ export default function RootLayout() {
           value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
         >
           <Stack>
-            <Stack.Protected guard={true}>
+            <Stack.Protected guard={Boolean(token)}>
               <Stack.Screen
                 name="(protected)"
                 options={{ headerShown: false }}

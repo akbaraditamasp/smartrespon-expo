@@ -41,7 +41,6 @@ export default function Login() {
   });
 
   const onRegister = form.handleSubmit((data) => {
-    console.log(data);
     register.mutateAsync(data);
     Keyboard.dismiss();
   });

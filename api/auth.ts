@@ -41,4 +41,4 @@ export const checkTokenClient = (token: string): Promise<UserModel> =>
     .then(({ data }) => data.data);
 
 export const logoutClient = (): Promise<UserModel> =>
-  client.delete("/logout").then(({ data }) => data.data);
+  client.delete("/auth/logout").then(({ data }) => data.data);
