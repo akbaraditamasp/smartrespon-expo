@@ -29,7 +29,7 @@ export const composeComplaintValidation = z.object({
   pics: z.array(
     z.object({
       id: z.string().optional(),
-      url: z.string().url(),
+      url: z.string(),
       name: z.string().optional(),
       size: z.number().optional(),
       type: z.string().optional(),
@@ -79,3 +79,6 @@ export const indexComplaintClient = (): Promise<ComplaintModel[]> =>
 
 export const getComplaintClient = (id: string): Promise<ComplaintModel> =>
   client.get(`/complaint/${id}`).then(({ data }) => data.data);
+
+export const deleteComplaintClient = (id: string): Promise<ComplaintModel> =>
+  client.delete(`/complaint/${id}`).then(({ data }) => data.data);

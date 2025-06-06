@@ -69,6 +69,7 @@ export default function ProtectedLayout() {
         }}
       />
       <Stack.Screen name="compose" />
+      <Stack.Screen name="detail" options={{ title: "" }} />
     </Stack>
   );
 }

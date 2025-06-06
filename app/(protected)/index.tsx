@@ -31,7 +31,7 @@ export default function Home() {
         keyExtractor={(_item, index) => `${index}`}
         renderItem={({ item }) => (
           <Link
-            href={{ pathname: "/(protected)/compose", params: { id: item.id } }}
+            href={{ pathname: "/(protected)/detail", params: { id: item.id } }}
             asChild
           >
             <TouchableOpacity>

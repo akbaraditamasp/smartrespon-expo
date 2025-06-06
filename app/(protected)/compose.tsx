@@ -21,7 +21,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import * as ImagePicker from "expo-image-picker";
 import { useLocalSearchParams } from "expo-router";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import {
   FlatList,
@@ -35,7 +35,6 @@ export default function ComposeComplaint() {
   const param = useLocalSearchParams<{ id: string }>();
   const queryClient = useQueryClient();
   const navigation = useNavigation();
-  const [actionOpened, setActionOpened] = useState(false);
 
   const form = useForm<z.infer<typeof composeComplaintValidation>>({
     resolver: zodResolver(composeComplaintValidation),
@@ -55,7 +54,9 @@ export default function ComposeComplaint() {
   const compose = useMutation({
     mutationFn: composeComplaintClient,
     onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ["complaints"] });
+      await queryClient.invalidateQueries({
+        queryKey: ["complaints", `complaint-${param.id}`],
+      });
       navigation.goBack();
     },
   });
